@@ -6,68 +6,89 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.example.kakalogger.R
 import com.example.kakalogger.databinding.FragmentMainBinding
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 /**
  * A placeholder fragment containing a simple view.
  */
 class PlaceholderFragment : Fragment() {
+    // When requested, this adapter returns a DemoObjectFragment,
+    // representing an object in the collection.
+    private lateinit var demoCollectionAdapter: DemoCollectionAdapter
+    private lateinit var viewPager: ViewPager2
 
-    private lateinit var pageViewModel: PageViewModel
-    private var _binding: FragmentMainBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        pageViewModel = ViewModelProvider(this).get(PageViewModel::class.java).apply {
-            setIndex(arguments?.getInt(ARG_SECTION_NUMBER) ?: 1)
+    companion object {
+        fun newInstance(foo: Int): Fragment {
+            val args = Bundle()
+            args.putInt("foo", foo)
+            val fragment = Fragment()
+            fragment.arguments = args
+            return fragment
         }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
-        val root = binding.root
-
-        val textView: TextView = binding.sectionLabel
-        pageViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+        return inflater.inflate(R.layout.activity_main, container, false)
     }
 
-    companion object {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private const val ARG_SECTION_NUMBER = "section_number"
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        demoCollectionAdapter = DemoCollectionAdapter(this)
+        viewPager = view.findViewById(R.id.pager)
+        viewPager.adapter = demoCollectionAdapter
+        val tabLayout = view.findViewById<TabLayout>(R.id.tabs)
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = "OBJECT ${(position + 1)}"
+        }.attach()
+    }
+}
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        @JvmStatic
-        fun newInstance(sectionNumber: Int): PlaceholderFragment {
-            return PlaceholderFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_SECTION_NUMBER, sectionNumber)
-                }
-            }
+class DemoCollectionAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+
+    override fun getItemCount(): Int = 100
+
+    override fun createFragment(position: Int): Fragment {
+        // Return a NEW fragment instance in createFragment(int)
+        val fragment = DemoObjectFragment()
+        fragment.arguments = Bundle().apply {
+            // Our object is just an integer :-P
+            putInt(ARG_OBJECT, position + 1)
         }
+        return fragment
+    }
+}
+
+private const val ARG_OBJECT = "object"
+
+// Instances of this class are fragments representing a single
+// object in our collection.
+class DemoObjectFragment : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        arguments?.takeIf { it.containsKey(ARG_OBJECT) }?.apply {
+            val textView: TextView = view.findViewById(android.R.id.text1)
+            textView.text = getInt(ARG_OBJECT).toString()
+        }
     }
 }
