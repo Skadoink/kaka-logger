@@ -1,37 +1,52 @@
 package com.example.kakalogger.ui.main
 
+import android.R.layout
+import android.R.drawable
 import android.content.Context
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
 import com.example.kakalogger.R
-import java.lang.reflect.Array.newInstance
 
 
-private val TAB_TITLES = arrayOf(
-    R.string.tab_text_1,
-    R.string.tab_text_2
-)
+internal class ViewPager2Adapter     // Constructor of our ViewPager2Adapter class
+    (private val ctx: Context) :
+    RecyclerView.Adapter<ViewPager2Adapter.ViewHolder>() {
+    // Array of images
+    // Adding images from drawable folder
+    private val images = intArrayOf(
+        drawable.ic_delete,
+        drawable.ic_btn_speak_now,
+        drawable.ic_delete,
+        drawable.ic_btn_speak_now,
+        drawable.ic_delete
+    )
 
-/**
- * A [FragmentPagerAdapter] that returns a fragment corresponding to
- * one of the sections/tabs/pages.
- */
-class Viewpager2Adapter(private val context: Context, fm: FragmentManager) :
-    FragmentPagerAdapter(fm) {
-
-    override fun getItem(position: Int): Fragment {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1)
+    // This method returns our layout
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view: View = LayoutInflater.from(ctx).inflate(R.layout.images_holder, parent, false)
+        return ViewHolder(view)
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
-        return context.resources.getString(TAB_TITLES[position])
+    // This method binds the screen with the view
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        // This will set the images in imageview
+        holder.images.setImageResource(images[position])
     }
 
-    override fun getCount(): Int {
-        // Show 2 total pages.
-        return 2
+    // This Method returns the size of the Array
+    override fun getItemCount(): Int {
+        return images.size
+    }
+
+    // The ViewHolder class holds the view
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var images: ImageView
+
+        init {
+            images = itemView.findViewById(R.id.images)
+        }
     }
 }

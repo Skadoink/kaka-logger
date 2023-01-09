@@ -47,12 +47,9 @@ class PlaceholderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         demoCollectionAdapter = DemoCollectionAdapter(this)
-        viewPager = view.findViewById(R.id.pager)
+        viewPager = view.findViewById(R.id.viewpager)
         viewPager.adapter = demoCollectionAdapter
-        val tabLayout = view.findViewById<TabLayout>(R.id.tabs)
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = "OBJECT ${(position + 1)}"
-        }.attach()
+
     }
 }
 
