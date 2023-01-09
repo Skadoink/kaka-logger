@@ -15,7 +15,9 @@
             android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways" />
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:title="Kākā Logger"
+            app:titleTextColor="@color/white" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
@@ -58,7 +60,6 @@
             tools:context=".MainActivity">
 
             <androidx.viewpager2.widget.ViewPager2
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
