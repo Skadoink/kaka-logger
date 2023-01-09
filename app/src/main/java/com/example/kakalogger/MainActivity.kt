@@ -8,7 +8,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.example.kakalogger.ui.main.ScreenSlidePageFragment
-import com.example.kakalogger.ui.main.ViewPager2Adapter
 
 
 /**
