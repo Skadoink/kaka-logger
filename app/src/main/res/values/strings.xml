@@ -8,4 +8,5 @@
     <string name="tab3">Tab3</string>
     <string name="log">Log!</string>
     <string name="this_is_the_page_for_data_display">This is the page for data display</string>
+    <string name="toolbar_title">Kākā Logger</string>
 </resources>

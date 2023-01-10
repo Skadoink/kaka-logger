@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="405dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/this_is_the_page_for_data_display"
         android:textSize="34sp"

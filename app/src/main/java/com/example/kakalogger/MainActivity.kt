@@ -1,6 +1,9 @@
 package com.example.kakalogger
 
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -9,6 +12,11 @@ import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.example.kakalogger.ui.main.DataDisplayFragment
 import com.example.kakalogger.ui.main.ScreenSlidePageFragment
+import com.google.android.material.tabs.TabItem
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 /**
@@ -37,6 +45,11 @@ class MainActivity : FragmentActivity() {
 
         val fragsList = listOf(ScreenSlidePageFragment(), DataDisplayFragment())
         pagerAdapter.fragsListHere.addAll(fragsList)
+
+        val tabLayout = findViewById<TabLayout>(R.id.tabs)
+        TabLayoutMediator(tabLayout, viewpager) { tab, position ->
+            tab.text = "OBJECT ${(position + 1)}"
+        }.attach()
     }
 
     override fun onBackPressed() {
@@ -49,6 +62,7 @@ class MainActivity : FragmentActivity() {
             viewPager.currentItem = viewPager.currentItem - 1
         }
     }
+
 
     /**
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in

@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:title="Kākā Logger"
+            app:title="@string/toolbar_title"
             app:titleTextColor="@color/white" />
 
         <com.google.android.material.tabs.TabLayout
@@ -24,14 +24,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways"
-
             app:tabMode="scrollable">
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tab1" />
+                android:clickable="true"
+                android:text="@string/tab1"
+                android:focusable="true" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab2"
@@ -50,9 +51,9 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:fillViewport="true"
-
         android:layout_height="match_parent"
+
+        android:fillViewport="true"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
