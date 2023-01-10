@@ -7,13 +7,14 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.example.kakalogger.ui.main.DataDisplayFragment
 import com.example.kakalogger.ui.main.ScreenSlidePageFragment
 
 
 /**
  * The number of pages (wizard steps) to show in this demo.
  */
-private const val NUM_PAGES = 5
+private const val NUM_PAGES = 2
 
 class MainActivity : FragmentActivity() {
 
@@ -33,6 +34,9 @@ class MainActivity : FragmentActivity() {
         // The pager adapter, which provides the pages to the view pager widget.
         val pagerAdapter = ScreenSlidePagerAdapter(this)
         viewPager.adapter = pagerAdapter
+
+        val fragsList = listOf(ScreenSlidePageFragment(), DataDisplayFragment())
+        pagerAdapter.fragsListHere.addAll(fragsList)
     }
 
     override fun onBackPressed() {
@@ -51,8 +55,8 @@ class MainActivity : FragmentActivity() {
      * sequence.
      */
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+        val fragsListHere = mutableListOf<Fragment>()
         override fun getItemCount(): Int = NUM_PAGES
-
-        override fun createFragment(position: Int): Fragment = ScreenSlidePageFragment()
+        override fun createFragment(position: Int): Fragment = fragsListHere[position]
     }
 }
