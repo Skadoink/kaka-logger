@@ -1,22 +1,17 @@
 package com.example.kakalogger
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.room.Room
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.example.kakalogger.db.main.AppDatabase
 import com.example.kakalogger.ui.main.DataDisplayFragment
 import com.example.kakalogger.ui.main.ScreenSlidePageFragment
-import com.google.android.material.tabs.TabItem
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 /**
@@ -50,6 +45,8 @@ class MainActivity : FragmentActivity() {
         TabLayoutMediator(tabLayout, viewpager) { tab, position ->
             tab.text = "OBJECT ${(position + 1)}"
         }.attach()
+
+        val db = makeDB()
     }
 
     override fun onBackPressed() {
@@ -61,6 +58,13 @@ class MainActivity : FragmentActivity() {
             // Otherwise, select the previous step.
             viewPager.currentItem = viewPager.currentItem - 1
         }
+    }
+
+    private fun makeDB(): AppDatabase {
+        return Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "database-name"
+        ).build()
     }
 
 
