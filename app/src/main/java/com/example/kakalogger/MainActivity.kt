@@ -28,13 +28,16 @@ class MainActivity : FragmentActivity() {
      */
     private lateinit var viewPager: ViewPager2
     private lateinit var db: AppDatabase
-    lateinit var logDao: LogDao
+    companion object LogDaoSetup {
+        var logDao: LogDao? = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         db = makeDB()
         logDao = db.logDao()
+
 
         // Instantiate a ViewPager2 and a PagerAdapter.
         viewPager = findViewById(R.id.viewpager)
@@ -43,7 +46,7 @@ class MainActivity : FragmentActivity() {
         val pagerAdapter = ScreenSlidePagerAdapter(this)
         viewPager.adapter = pagerAdapter
 
-        val fragsList = listOf(ScreenSlidePageFragment(logDao), DataDisplayFragment())
+        val fragsList = listOf(ScreenSlidePageFragment(), DataDisplayFragment())
         pagerAdapter.fragsListHere.addAll(fragsList)
 
         val tabLayout = findViewById<TabLayout>(R.id.tabs)

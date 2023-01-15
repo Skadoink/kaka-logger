@@ -14,7 +14,7 @@ interface LogDao {
     fun loadAllByBands(bandsArray: Array<String>): List<Log>
 
     @Insert
-    fun insertAll(vararg log: Log)
+    suspend fun insertAll(vararg log: Log)
 
     @Delete
     fun delete(log: Log)

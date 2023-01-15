@@ -4,7 +4,7 @@ import androidx.room.*
 
 @Entity
 data class Log(
-    @PrimaryKey(true)
+    @PrimaryKey(true) val id: Int,
     @ColumnInfo(name = "bands") val bands: String?,
     @ColumnInfo(name = "start_time") val startTime: String?,
     @ColumnInfo(name = "end_time") val endTime: String?
