@@ -16,7 +16,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="96dp"
             android:layout_height="wrap_content"
-            android:hint="Bands" />
+            android:hint="@string/bands" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -28,6 +28,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="AddLog"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

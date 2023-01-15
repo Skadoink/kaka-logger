@@ -7,6 +7,7 @@ import androidx.room.Room
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.kakalogger.db.main.AppDatabase
+import com.example.kakalogger.db.main.LogDao
 import com.example.kakalogger.ui.main.DataDisplayFragment
 import com.example.kakalogger.ui.main.ScreenSlidePageFragment
 import com.google.android.material.tabs.TabLayout
@@ -15,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 /**
- * The number of pages (wizard steps) to show in this demo.
+ * The number of pages
  */
 private const val NUM_PAGES = 2
 
@@ -26,10 +27,14 @@ class MainActivity : FragmentActivity() {
      * and next wizard steps.
      */
     private lateinit var viewPager: ViewPager2
+    private lateinit var db: AppDatabase
+    lateinit var logDao: LogDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        db = makeDB()
+        logDao = db.logDao()
 
         // Instantiate a ViewPager2 and a PagerAdapter.
         viewPager = findViewById(R.id.viewpager)
@@ -38,15 +43,13 @@ class MainActivity : FragmentActivity() {
         val pagerAdapter = ScreenSlidePagerAdapter(this)
         viewPager.adapter = pagerAdapter
 
-        val fragsList = listOf(ScreenSlidePageFragment(), DataDisplayFragment())
+        val fragsList = listOf(ScreenSlidePageFragment(logDao), DataDisplayFragment())
         pagerAdapter.fragsListHere.addAll(fragsList)
 
         val tabLayout = findViewById<TabLayout>(R.id.tabs)
         TabLayoutMediator(tabLayout, viewpager) { tab, position ->
             tab.text = "OBJECT ${(position + 1)}"
         }.attach()
-
-        val db = makeDB()
     }
 
     override fun onBackPressed() {

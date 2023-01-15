@@ -18,4 +18,6 @@ interface LogDao {
 
     @Delete
     fun delete(log: Log)
+
+    //TODO: get most popular bands for smart suggestions at input
 }
