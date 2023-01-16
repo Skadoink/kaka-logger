@@ -1,5 +1,6 @@
 package com.example.kakalogger.db.main
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -8,10 +9,10 @@ import androidx.room.Query
 @Dao
 interface LogDao {
     @Query("SELECT * FROM log")
-    fun getAll(): List<Log>
+    fun getAll(): LiveData<List<Log>>
 
     @Query("SELECT * FROM log WHERE bands IN (:bandsArray)")
-    fun loadAllByBands(bandsArray: Array<String>): List<Log>
+    fun loadAllByBands(bandsArray: Array<String>): LiveData<List<Log>>
 
     @Insert
     suspend fun insertAll(vararg log: Log)

@@ -38,7 +38,6 @@ class MainActivity : FragmentActivity() {
         db = makeDB()
         logDao = db.logDao()
 
-
         // Instantiate a ViewPager2 and a PagerAdapter.
         viewPager = findViewById(R.id.viewpager)
 
